@@ -31,13 +31,14 @@ public class BaseTest {
         Map<String, String> map = mapper.readValue(new File("src/test/resources/dataJson.json"), Map.class);
         return map.get(parameter);
     }
-}
-/*
+
     @AfterSuite
     public void TeardownTest() {
         driver.quit();
     }
 }
 
- */
+
+
+
 

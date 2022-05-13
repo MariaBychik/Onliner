@@ -1,7 +1,6 @@
 package pages;
 
 import io.qameta.allure.Step;
-import org.testng.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -10,8 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class SearchPage {
@@ -44,17 +41,8 @@ public class SearchPage {
     @FindBy(xpath = "//a[@class='button-style button-style_auxiliary button-style_base-alter product-recommended__button product-recommended__button_increment']")
     WebElement addButton;
 
-    @FindBy(xpath = "(//*[@id='container']//descendant::div[contains(text(), 'р.')])[2]")
-    WebElement priceText;
-
-    @FindBy(xpath = "(//div[@class='product-recommended__link product-recommended__link_primary'])[2]")
-    WebElement priceTextInBasket;
-
-    @FindBy(xpath ="//div[@class='product-recommended__link product-recommended__link_primary']//descendant::span")
-    WebElement initialPriceInBasket;
-
     @FindBy(xpath = "//div[@class='product-recommended__link product-recommended__link_primary']//descendant::span")
-    WebElement newPriceTextField;
+    WebElement initialPriceInBasket;
 
     @FindBy(xpath = "//a[@class='button-style button-style_auxiliary button-style_base-alter product-recommended__button product-recommended__button_decrement']")
     WebElement removeButton;
@@ -62,16 +50,11 @@ public class SearchPage {
     @FindBy(xpath = "//div[@class='product-recommended__sidebar-close']")
     WebElement closeButton;
 
-    @FindBy(xpath = "//a[@class='auth-bar__item auth-bar__item--cart']")
+    @FindBy(xpath = "//a[@class='b-top-profile__cart']")
     WebElement cartButton;
 
     @FindBy(xpath = "(//div[@class='cart-form__control'])[1]")
     WebElement basketRemovalButton;
-
-    public SearchPage returnHomePage() {
-        driver.navigate().to("https://www.onliner.by");
-        return this;
-    }
 
     public SearchPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -113,27 +96,14 @@ public class SearchPage {
     public SearchPage addToBasket() {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", basketButton);
-        List<String> price = new ArrayList<>();
-        price.add(priceText.getText());
-        Assert.assertEquals(price.get(0), priceTextInBasket.getText());
         return this;
     }
 
     @Step("Increase the number of items")
     public SearchPage addQuantity() {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
-        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(addButton));
         executor.executeScript("arguments[0].click();", addButton);
-        String price = initialPriceInBasket.getText();
-        try {
-            double aDoublePrim = Double.parseDouble(price);
-            double a =  aDoublePrim + aDoublePrim;
-            String newPrice = String.valueOf(a);
-            Assert.assertEquals(newPrice, newPriceTextField.getText());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-     return this;
+        return this;
     }
 
     @Step("Remove item")
@@ -161,7 +131,6 @@ public class SearchPage {
         return this;
     }
 
-    
     @Step("Delete item from basket")
     public SearchPage deleteItem() {
         Actions action = new Actions(driver);
@@ -169,14 +138,43 @@ public class SearchPage {
         return this;
     }
 
-
-    @Step("Verify that user is logged in")
+    @Step("Verify that item is deleted")
     public boolean isItemDeleted() {
         WebElement confirm = new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(driver -> driver.findElement(By.xpath("//div[@class='cart-form__description cart-form__description_primary cart-form__description_base-alter cart-form__description_condensed-extra']")));
         return confirm.getText().contains("удалили");
     }
+
+    public String getPrice(){
+        WebElement confirm = new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(driver -> driver.findElement(By.xpath("(//*[@id='container']//descendant::div[contains(text(), 'р.')])[2]")));
+        return confirm.getText();
+    }
+
+    public String getPriceCart(){
+        WebElement confirm = new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(driver -> driver.findElement(By.xpath("(//div[@class='product-recommended__link product-recommended__link_primary'])[2]")));
+        return confirm.getText();
+    }
+
+    public String getPriceInBasket(){
+        WebElement confirm = new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(driver -> driver.findElement(By.xpath("//div[@class='product-recommended__link product-recommended__link_primary']//descendant::span")));
+        return confirm.getText();
+    }
+
+    public String getAddPrice(){
+        String price = initialPriceInBasket.getText();
+        try {
+            int aDoublePrim  = Integer.parseInt(price.trim());
+            aDoublePrim += aDoublePrim;
+            return String.valueOf(aDoublePrim);
+        }catch(NumberFormatException ex){
+        }
+        return price;
+    }
 }
+
 
 
 

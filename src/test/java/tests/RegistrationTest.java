@@ -2,29 +2,29 @@ package tests;
 
 import io.qameta.allure.Description;
 import listeners.TestListener;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pages.LoginPage;
+import org.testng.asserts.SoftAssert;
+import pages.RegistrationPage;
 
 @Listeners({TestListener.class})
-public class LoginTest extends BaseTest{
+public class RegistrationTest extends BaseTest{
 
     @Test(priority = 0,description="Registration with valid values")
     @Description("Test Description: Create account with valid values")
     public void validLoginTest(){
-        String email = utils.RandomUtils.getEmailString() + "@gmail.com";
         String password = utils.RandomUtils.getPasswordString();
-        String confirmPassword = password;
 
-        LoginPage validLogin = new LoginPage(driver);
+        RegistrationPage validLogin = new RegistrationPage(driver);
+        SoftAssert Assert = new SoftAssert();
         validLogin.clickLoginButton()
                 .switchToRegisterPage()
-                .inputEmail(email)
+                .inputEmail()
                 .inputPassword(password)
-                .confirmPassword(confirmPassword)
+                .confirmPassword(password)
                 .clickCheckBox()
                 .clickContinueButton();
         Assert.assertTrue(validLogin.isUserLoggedIn(), "User is not logged in");
+        Assert.assertAll();
     }
 }
