@@ -25,6 +25,7 @@ public class RegistrationTest extends BaseTest{
                 .clickCheckBox()
                 .clickContinueButton();
         Assert.assertTrue(validLogin.isUserLoggedIn(), "User is not logged in");
+        validLogin.logOutOfAccount();
         Assert.assertAll();
     }
 }

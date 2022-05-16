@@ -11,12 +11,13 @@ import pages.SearchPage;
 public class SearchTest extends BaseTest{
 
     @Test(priority = 1,description="Search items with valid values")
-    @Description("Test Description: Search test with authorization in the account")
+    @Description("Test Description: Search test without authorization in the account")
     public void validSearch() throws Exception {
 
         SearchPage search = new SearchPage(driver);
         SoftAssert Assert = new SoftAssert();
-        search.switchToCatalog()
+        search.returnHomePage()
+                .switchToCatalog()
                 .searchItem(getTestData("item"))
                 .selectItem()
                 .acceptLocality()

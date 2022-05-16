@@ -50,7 +50,7 @@ public class SearchPage {
     @FindBy(xpath = "//div[@class='product-recommended__sidebar-close']")
     WebElement closeButton;
 
-    @FindBy(xpath = "//a[@class='b-top-profile__cart']")
+    @FindBy(xpath = "//a[@class='auth-bar__item auth-bar__item--cart']")
     WebElement cartButton;
 
     @FindBy(xpath = "(//div[@class='cart-form__control'])[1]")
@@ -59,6 +59,11 @@ public class SearchPage {
     public SearchPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
+    }
+
+    public SearchPage returnHomePage() {
+        driver.navigate().to("https://www.onliner.by");
+        return this;
     }
 
     @Step("Click Catalog button")

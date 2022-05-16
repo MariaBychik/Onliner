@@ -49,6 +49,12 @@ public class RegistrationPage {
     @FindBy(xpath = "(//td[@align='center'])[4]")
     WebElement confirmButton;
 
+    @FindBy(xpath = "//a[@class='b-top-profile__preview js-toggle-bar']")
+    WebElement accountMenuButton;
+
+    @FindBy(xpath = "//a[@class='b-top-profile__link b-top-profile__link_secondary']")
+    WebElement logOutButton;
+
 
     public RegistrationPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -110,6 +116,12 @@ public class RegistrationPage {
         switchToConfirm.click();
         backButton.click();
         switchToConfirm.click();
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(iframe));
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click()", iframe);
         driver.switchTo().frame(iframe);
         confirmButton.click();
         return this;
@@ -122,5 +134,12 @@ public class RegistrationPage {
         WebElement account = new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(driver -> driver.findElement(By.xpath("//div[@class='profile-header__details-item']")));
         return account.getText().contains("ID");
+    }
+
+    @Step()
+    public RegistrationPage logOutOfAccount(){
+        accountMenuButton.click();
+        logOutButton.click();
+        return this;
     }
 }
