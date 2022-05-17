@@ -1,3 +1,7 @@
 {
-  "item": "Honor"
+  "item": "Honor",
+  "section": "Строительные и отделочные работы",
+  "order": "Комплексный ремонт",
+  "sectionPerformers": "Туризм",
+  "orderPerformers": "Подготовка документов для визы"
 }
