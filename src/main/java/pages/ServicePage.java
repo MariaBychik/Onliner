@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class OrdersPage {
+public class ServicePage {
     public WebDriver driver;
 
     @FindBy(xpath = "//span[@class='b-main-navigation__text'][text()='Услуги']")
@@ -40,24 +40,24 @@ public class OrdersPage {
     WebElement orderPerformersBox;
 
 
-    public OrdersPage(WebDriver driver) {
+    public ServicePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
 
-    public OrdersPage returnHomePage() {
+    public ServicePage returnHomePage() {
         driver.navigate().to("https://www.onliner.by");
         return this;
     }
 
     @Step("Switch to Услуги tab ")
-    public OrdersPage switchToOrdersTab() {
+    public ServicePage switchToOrdersTab() {
             ordersTab.click();
         return this;
     }
 
     @Step("Select the orders section for the customer")
-    public OrdersPage selectCustomersOrdersSection(String section) {
+    public ServicePage selectCustomersOrdersSection(String section) {
         String xpath = "//a[@class='service-form__link service-form__link_alter service-form__link_base service-form__link_arrow_bottom ng-binding'][text()= '%s']";
         if (!driver.findElement(By.xpath(String.format(xpath, section))).isSelected()) {
             driver.findElement(By.xpath(String.format(xpath, section))).click();
@@ -66,7 +66,7 @@ public class OrdersPage {
     }
 
     @Step("Filtering the selected section")
-    public OrdersPage filterCustomersOrder(String order) {
+    public ServicePage filterCustomersOrder(String order) {
         String xpath = "//span[@class='service-form__checkbox-sign ng-binding'][text()='%s']";
         try {
             new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(sectionTab));
@@ -81,7 +81,7 @@ public class OrdersPage {
     }
 
     @Step("Select the order for the customer")
-    public OrdersPage selectCustomersOrder() {
+    public ServicePage selectCustomersOrder() {
         try {
             new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(orderField));
             orderBox.click();
@@ -92,7 +92,7 @@ public class OrdersPage {
     }
 
     @Step("Switch to Исполнители tab")
-    public OrdersPage switchToPerformersTab() {
+    public ServicePage switchToPerformersTab() {
         try {
             new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(orderTitle));
             performersTab.click();
@@ -103,7 +103,7 @@ public class OrdersPage {
     }
 
     @Step("Select the orders section for the performers")
-    public OrdersPage selectPerformersOrdersSection(String sectionPerformers) {
+    public ServicePage selectPerformersOrdersSection(String sectionPerformers) {
         String xpath = "//a[@class='service-form__link service-form__link_alter service-form__link_base service-form__link_arrow_bottom ng-binding'][text()= '%s']";
         if (!driver.findElement(By.xpath(String.format(xpath, sectionPerformers))).isSelected()) {
             try {
@@ -118,7 +118,7 @@ public class OrdersPage {
     }
 
     @Step("Filtering the selected section")
-    public OrdersPage filterPerformersOrder(String orderPerformers) {
+    public ServicePage filterPerformersOrder(String orderPerformers) {
         String xpath = "//span[@class='service-form__checkbox-sign ng-binding'][text()='%s']";
         if (!driver.findElement(By.xpath(String.format(xpath, orderPerformers))).isSelected()) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(By.xpath(String.format(xpath, orderPerformers))));
@@ -127,7 +127,7 @@ public class OrdersPage {
     }
 
     @Step("Select the order for the performers")
-    public OrdersPage selectPerformersOrder() {
+    public ServicePage selectPerformersOrder() {
         if(orderPerformersField.isDisplayed()) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", orderPerformersBox);
             orderPerformersBox.click();

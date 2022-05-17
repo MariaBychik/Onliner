@@ -5,16 +5,16 @@ import listeners.TestListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import pages.OrdersPage;
+import pages.ServicePage;
 
 @Listeners({TestListener.class})
-public class OrdersTest extends BaseTest {
+public class ServiceTest extends BaseTest {
 
     @Test(priority = 2,description="Search for services with valid values")
     @Description("Test Description: Search for services for customers and performers")
     public void validOrder() throws Exception {
 
-        OrdersPage searchOrder = new OrdersPage(driver);
+        ServicePage searchOrder = new ServicePage(driver);
         SoftAssert Assert = new SoftAssert();
         searchOrder.returnHomePage()
                 .switchToOrdersTab()
