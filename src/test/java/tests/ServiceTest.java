@@ -11,7 +11,7 @@ import pages.ServicePage;
 public class ServiceTest extends BaseTest {
 
     @Test(priority = 0,description="Search for services for customers with valid values")
-    @Description("Test Description: Search for services for customers and performers")
+    @Description("Test Description: Search for services for customers")
     public void validSearchOrder() throws Exception {
 
         ServicePage searchOrder = new ServicePage(driver);
@@ -25,8 +25,8 @@ public class ServiceTest extends BaseTest {
     }
 
 
-        @Test(priority = 1,description="Search for services for customers with valid values")
-        @Description("Test Description: Search for services for customers and performers")
+        @Test(priority = 1,description="Search for services for performers with valid values")
+        @Description("Test Description: Search for services for performers")
         public void validSearchPerformer() throws Exception {
 
             ServicePage searchPerformer = new ServicePage(driver);
