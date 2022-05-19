@@ -60,6 +60,7 @@ public class ServicePage {
     public ServicePage selectCustomersOrdersSection(String section) {
         String xpath = "//a[@class='service-form__link service-form__link_alter service-form__link_base service-form__link_arrow_bottom ng-binding'][text()= '%s']";
         if (!driver.findElement(By.xpath(String.format(xpath, section))).isSelected()) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.xpath(String.format(xpath, section))));
             driver.findElement(By.xpath(String.format(xpath, section))).click();
         }
         return this;
@@ -94,6 +95,7 @@ public class ServicePage {
     @Step("Switch to Исполнители tab")
     public ServicePage switchToPerformersTab() {
         try {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", orderTitle);
             new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(orderTitle));
             performersTab.click();
         } catch (TimeoutException e) {

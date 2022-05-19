@@ -116,11 +116,7 @@ public class RegistrationPage {
         switchToConfirm.click();
         backButton.click();
         switchToConfirm.click();
-        try {
-            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOf(iframe));
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        }
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", iframe);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click()", iframe);
         driver.switchTo().frame(iframe);
         confirmButton.click();

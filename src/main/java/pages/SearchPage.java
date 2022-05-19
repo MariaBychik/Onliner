@@ -53,8 +53,7 @@ public class SearchPage {
     @FindBy(xpath = "//a[@class='auth-bar__item auth-bar__item--cart']")
     WebElement cartButton;
 
-    @FindBy(xpath = "(//div[@class='cart-form__control'])[1]")
-    WebElement basketRemovalButton;
+
 
     public SearchPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -136,19 +135,7 @@ public class SearchPage {
         return this;
     }
 
-    @Step("Delete item from basket")
-    public SearchPage deleteItem() {
-        Actions action = new Actions(driver);
-        action.moveToElement(basketRemovalButton).doubleClick(basketRemovalButton).build().perform();
-        return this;
-    }
 
-    @Step("Verify that item is deleted")
-    public boolean isItemDeleted() {
-        WebElement confirm = new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(driver -> driver.findElement(By.xpath("//div[@class='cart-form__description cart-form__description_primary cart-form__description_base-alter cart-form__description_condensed-extra']")));
-        return confirm.getText().contains("удалили");
-    }
 
     public String getPrice(){
         WebElement confirm = new WebDriverWait(driver, Duration.ofSeconds(5))

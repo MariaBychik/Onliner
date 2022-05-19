@@ -5,6 +5,7 @@ import listeners.TestListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.BasketPage;
 import pages.SearchPage;
 
 @Listeners({TestListener.class})
@@ -15,6 +16,7 @@ public class SearchTest extends BaseTest{
     public void validSearch() throws Exception {
 
         SearchPage search = new SearchPage(driver);
+        BasketPage basket = new BasketPage(driver);
         SoftAssert Assert = new SoftAssert();
         search.returnHomePage()
                 .switchToCatalog()
@@ -27,9 +29,9 @@ public class SearchTest extends BaseTest{
         Assert.assertEquals(search.getAddPrice(), search.getPriceInBasket());
                 search.removeQuantity()
                 .closeWindow()
-                .switchToCart()
-                .deleteItem();
-        Assert.assertTrue(search.isItemDeleted(), "Item is not deleted");
+                .switchToCart();
+                basket.deleteItem();
+        Assert.assertTrue(basket.isItemDeleted(), "Item is not deleted");
         Assert.assertAll();
     }
 }
